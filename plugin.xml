@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="cordova-plugin-wkwebview" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>WKWebViewPlugin</name>
+    <description>Cordova Plugin to open a webpage using WKWebView</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova, wkwebview, plugin</keywords>
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="WKWebViewPlugin">
+                <param name="ios-package" value="WKWebViewPlugin" />
+            </feature>
+        </config-file>
+        <source-file src="src/ios/WKWebViewPlugin.m"/>
+        <header-file src="src/ios/WKWebViewPlugin.h"/>
+    </platform>
+    <js-module src="www/WKWebViewPlugin.js" name="WKWebViewPlugin">
+        <clobbers target="WKWebViewPlugin" />
+    </js-module>
+</plugin>

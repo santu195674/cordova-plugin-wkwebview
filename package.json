@@ -1,0 +1,18 @@
+{
+  "name": "cordova-plugin-wkwebview",
+  "version": "1.0.0",
+  "description": "Cordova Plugin to open a webpage using WKWebView",
+  "cordova": {
+    "id": "cordova-plugin-wkwebview",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "wkwebview",
+    "ecosystem:cordova"
+  ],
+  "author": "Santu Chakraborty",
+  "license": "Apache-2.0"
+}
