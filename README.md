@@ -19,6 +19,4 @@ function onDeviceReady() {
         });
     }, false);
 
-    // Example usage of SafariViewController
-   // openSafariViewController();
 }
