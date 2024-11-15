@@ -18,5 +18,4 @@ function onDeviceReady() {
             console.error('WKWebViewPlugin: Error opening webpage: ' + error);
         });
     }, false);
-
 }
