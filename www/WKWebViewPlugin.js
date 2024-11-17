@@ -1,8 +1,11 @@
 var exec = require('cordova/exec');
 
 var WKWebViewPlugin = {
-    open: function(url, successCallback, errorCallback) {
-        exec(successCallback, errorCallback, 'WKWebViewPlugin', 'open', [url]);
+    open: function(url, showCloseButton, successCallback, errorCallback) {
+        exec(successCallback, errorCallback, 'WKWebViewPlugin', 'open', [url, showCloseButton]);
+    },
+    hide: function(successCallback, errorCallback) {
+        exec(successCallback, errorCallback, 'WKWebViewPlugin', 'hide', []);
     }
 };
 

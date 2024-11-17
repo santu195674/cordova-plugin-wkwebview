@@ -5,11 +5,12 @@
     UIView *containerView;
     NSString *callbackId;
     UIActivityIndicatorView *loadingSpinner;
-    
 }
 
 - (void)open:(CDVInvokedUrlCommand*)command {
     NSString* urlString = [command.arguments objectAtIndex:0];
+    NSNumber* showCloseButton = (command.arguments.count > 1) ? [command.arguments objectAtIndex:1] : @NO;
+    
     if (urlString == nil) {
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"URL cannot be null"];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -61,12 +62,14 @@
     
     [topBar addSubview:bottomBorder];
     
-    // Create the close button
-    UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    closeButton.frame = CGRectMake(self.viewController.view.bounds.size.width - 60, 10, 50, 30);
-    [closeButton setTitle:@"Close" forState:UIControlStateNormal];
-    [closeButton addTarget:self action:@selector(closeWebView) forControlEvents:UIControlEventTouchUpInside];
-    [topBar addSubview:closeButton];
+    // Conditionally create the close button
+    if ([showCloseButton boolValue]) {
+        UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        closeButton.frame = CGRectMake(self.viewController.view.bounds.size.width - 60, 10, 50, 30);
+        [closeButton setTitle:@"Close" forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeWebView) forControlEvents:UIControlEventTouchUpInside];
+        [topBar addSubview:closeButton];
+    }
     
     [containerView addSubview:topBar];
     [containerView addSubview:webView];
@@ -170,6 +173,18 @@
         
     }
 }
+
+- (void)hide:(CDVInvokedUrlCommand*)command {
+    if (containerView != nil) {
+        [self closeWebView];
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"hide"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"WebView is not open"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }
+}
+
 
 - (void)closeWebView {
     [containerView removeFromSuperview];
