@@ -86,9 +86,10 @@
     // Add the container view to the main view
     [self.viewController.view addSubview:containerView];
     
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    
+    NSLog(@"WKWebViewPlugin (iOS): callbackId %@",command.callbackId);
+    //    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    //    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    //
 }
 
 // WKNavigationDelegate method to handle loading events
@@ -144,14 +145,29 @@
     if ([message.name isEqualToString:@"cordova_iab"]) {
         
         id messageBody = message.body;
-        NSString *messageString = (NSString *)messageBody;
+        NSString *messageString;
         
-        NSLog(@"WKWebViewPlugin: Received message from Equinity: %@", messageString);
+        if ([NSJSONSerialization isValidJSONObject:messageBody]) {
+            NSError *error;
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:messageBody options:0 error:&error];
+            if (!error) {
+                messageString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            } else {
+                NSLog(@"Error serializing JSON: %@", error.localizedDescription);
+                messageString = @"";
+            }
+        } else {
+            messageString = (NSString *)messageBody;
+        }
         
-        // Perform any Cordova-related actions or call a JavaScript callback here
-        // Example: Send message back to Cordova
-        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:messageBody];
+        NSLog(@"WKWebViewPlugin (iOS): Received message from Equinity: %@", messageString);
+        NSLog(@"WKWebViewPlugin (iOS): callbackId %@",callbackId);
+        
+        // Send the message to the JavaScript callback
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:messageString];
+        [pluginResult setKeepCallbackAsBool:YES];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
+        
     }
 }
 
