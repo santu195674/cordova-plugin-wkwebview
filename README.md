@@ -3,7 +3,15 @@ Access Webview using wkwebview for iOS
 
 cordova plugin add https://github.com/santu195674/cordova-plugin-wkwebview.git
 
-
+/**
+     * Open a webpage using WKWebView.
+     * 
+     * @param {string} url - The URL of the webpage to open.
+     * @param {boolean} showCloseButton - Whether to show the close button.
+     * @param {function} successCallback - The callback function to execute on success.
+     * @param {function} errorCallback - The callback function to execute on error.
+     */
+     
 function onDeviceReady() {
     // Cordova is now initialized. Have fun!
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
