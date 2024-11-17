@@ -3,7 +3,14 @@ Access Webview using wkwebview for iOS
 
 cordova plugin add https://github.com/santu195674/cordova-plugin-wkwebview.git
 
-/**
+
+function onDeviceReady() {
+    // Cordova is now initialized. Have fun!
+    console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
+    document.getElementById('deviceready').classList.add('ready');
+
+    document.addEventListener('deviceready', function() {
+    /**
      * Open a webpage using WKWebView.
      * 
      * @param {string} url - The URL of the webpage to open.
@@ -11,13 +18,6 @@ cordova plugin add https://github.com/santu195674/cordova-plugin-wkwebview.git
      * @param {function} successCallback - The callback function to execute on success.
      * @param {function} errorCallback - The callback function to execute on error.
      */
-     
-function onDeviceReady() {
-    // Cordova is now initialized. Have fun!
-    console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
-    document.getElementById('deviceready').classList.add('ready');
-
-    document.addEventListener('deviceready', function() {
         WKWebViewPlugin.open('https://green-drusie-40.tiiny.site', true, function(result) {
             console.log('WKWebViewPlugin: Webpage opened successfully');
             console.log('WKWebViewPlugin: Received data from native plugin:', result);
