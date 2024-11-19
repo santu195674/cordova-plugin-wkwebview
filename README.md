@@ -10,10 +10,28 @@ function onDeviceReady() {
     document.getElementById('deviceready').classList.add('ready');
 
     document.addEventListener('deviceready', function() {
-        WKWebViewPlugin.open('https://green-drusie-40.tiiny.site', function(result) {
+    /**
+     * Open a webpage using WKWebView.
+     * 
+     * @param {string} url - The URL of the webpage to open.
+     * @param {boolean} showCloseButton - Whether to show the close button.
+     * @param {function} successCallback - The callback function to execute on success.
+     * @param {function} errorCallback - The callback function to execute on error.
+     */
+        WKWebViewPlugin.open('https://green-drusie-40.tiiny.site', true, function(result) {
             console.log('WKWebViewPlugin: Webpage opened successfully');
             console.log('WKWebViewPlugin: Received data from native plugin:', result);
             // Handle the received data here
+    
+            // Example: Hide the WebView after 2 seconds
+            setTimeout(function() {
+                console.log('WKWebViewPlugin:  Time Out');
+                WKWebViewPlugin.hide(function(result) {
+                    console.log('WKWebViewPlugin: WebView hidden successfully');
+                }, function(error) {
+                    console.error('WKWebViewPlugin: Error hiding WebView: ' + error);
+                });
+            }, 2000);
         }, function(error) {
             console.error('WKWebViewPlugin: Error opening webpage: ' + error);
         });
